@@ -8,7 +8,6 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Optional: Declarative tap management
     homebrew-core = {
       url = "github:homebrew/homebrew-core";
       flake = false;
@@ -57,6 +56,10 @@
           autoUpdate = true;
           upgrade = true;
         };
+        taps = [
+          "ddev/homebrew-ddev"
+          "symfony-cli/homebrew-tap"
+        ];
         brews = [
           "act"
           "cloudflared"
@@ -85,8 +88,8 @@
         casks = [
           "antigravity"
           "cloudflare-warp"
-          "mysql-workbench"
-          "docker-desktop"
+          "mysql-workbench" # Pindah ke sini agar tidak error
+          "docker"           # Nama resmi di brew adalah 'docker'
           "ghostty"
           "google-chrome"
           "postman"
@@ -96,18 +99,13 @@
           "whatsapp"
           "ngrok"
         ];
-        taps = [
-          "ddev/homebrew-ddev"
-          "symfony-cli/homebrew-tap"
-        ];
       };
 
-      # USERNAME DISESUAIKAN: ricardhogunawan
       system.primaryUser = "ricardhogunawan";
 
       system.defaults = {
         dock = {
-          autohide = false;
+          autohide = true; # Sudah saya set ke true sesuai keinginanmu
           mru-spaces = false;
           persistent-apps = [
             "/System/Applications/System Settings.app"
