@@ -41,6 +41,10 @@
         wget
         jq
         yq
+	php83
+        php83Packages.composer
+        nodejs_22
+        mysql84
       ];
 
       fonts.packages = with pkgs; [
@@ -56,10 +60,7 @@
           autoUpdate = true;
           upgrade = true;
         };
-        taps = [
-          "ddev/homebrew-ddev"
-          "symfony-cli/homebrew-tap"
-        ];
+        taps = [];
         brews = [
           "act"
           "cloudflared"
@@ -88,9 +89,8 @@
         casks = [
           "antigravity"
           "cloudflare-warp"
-          "mysql-workbench" # Pindah ke sini agar tidak error
-          "docker"           # Nama resmi di brew adalah 'docker'
-          "ghostty"
+          "dbeaver-community"
+          "docker-desktop"
           "google-chrome"
           "postman"
           "the-unarchiver"
@@ -105,13 +105,12 @@
 
       system.defaults = {
         dock = {
-          autohide = true; # Sudah saya set ke true sesuai keinginanmu
+          autohide = true;
           mru-spaces = false;
           persistent-apps = [
             "/System/Applications/System Settings.app"
             "/System/Applications/Utilities/Activity Monitor.app"
             "/Applications/Google Chrome.app"
-            "/Applications/Ghostty.app"
             "/Applications/Antigravity.app"
             "/Applications/WhatsApp.app"
           ];
