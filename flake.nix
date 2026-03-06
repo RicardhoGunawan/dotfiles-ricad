@@ -1,5 +1,5 @@
 {
-  description = "Ricardho darwin system flake";
+  description = "Ciiruu darwin system flake";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -102,7 +102,7 @@
         ];
       };
 
-      system.primaryUser = "ricardhogunawan";
+      system.primaryUser = "Ciiruu";
 
       system.defaults = {
         dock = {
@@ -131,8 +131,8 @@
       nix.settings.experimental-features = "nix-command flakes";
 
       programs.fish.enable = true;
-      users.users.ricardhogunawan = {
-          home = "/Users/ricardhogunawan";
+      users.users.ciiruu = {
+          home = "/Users/ciiruu";
           shell = pkgs.fish;
       };
       environment.shells = with pkgs; [
@@ -152,7 +152,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.ricardhogunawan = import ./home.nix;
+          home-manager.users.ciiruu = import ./home.nix;
         }
       ];
     };

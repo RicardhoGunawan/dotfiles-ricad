@@ -3,8 +3,8 @@
 {
   home.stateVersion = "25.11";
 
-  home.username = "ricardhogunawan";
-  home.homeDirectory = lib.mkForce "/Users/ricardhogunawan";
+  home.username = "ciiruu";
+  home.homeDirectory = lib.mkForce "/Users/ciiruu";
 
   home.packages = with pkgs; [
   ];
