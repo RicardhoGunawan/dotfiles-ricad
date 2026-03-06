@@ -1,10 +1,12 @@
 {
-  description = "Ciiruu darwin system flake";
+  description = "Ciiruu macOS system configuration";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -12,147 +14,159 @@
       url = "github:homebrew/homebrew-core";
       flake = false;
     };
+
     homebrew-cask = {
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+
     homebrew-bundle = {
       url = "github:homebrew/homebrew-bundle";
       flake = false;
     };
   };
 
-  outputs = inputs@{
-    self,
-    nix-darwin,
-    nixpkgs,
-    home-manager,
-    ...
-  }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, ... }:
   let
-    configuration = { pkgs, config, ... }: {
+    system = "aarch64-darwin";
+
+    configuration = { pkgs, ... }: {
+
       nixpkgs.config.allowUnfree = true;
+
       environment.systemPackages = with pkgs; [
+
+        # basic cli
         coreutils
         curl
-        mkalias
-        stow
-        vim
         wget
         jq
         yq
-	php83
-        php83Packages.composer
-        nodejs_22
-        mysql84
+
+        # utilities
+        git
+        vim
+        stow
+
+        # dev tools
+        mise
+        act
+        cloudflared
       ];
 
       fonts.packages = with pkgs; [
         jetbrains-mono
-        openmoji-color
         powerline-symbols
+        openmoji-color
       ];
 
       homebrew = {
         enable = true;
+
         onActivation = {
-          cleanup = "zap";
           autoUpdate = true;
           upgrade = true;
+          cleanup = "zap";
         };
-        taps = [];
+
         brews = [
-          "act"
-          "cloudflared"
-          "mise"
           "autoconf"
-          "re2c"
           "bison"
           "pkg-config"
-          "libiconv"
-          "gd"
-          "gmp"
-          "libsodium"
-          "libpq"
-          "readline"
-          "gettext"
-          "bzip2"
-          "curl"
-          "libffi"
-          "libxml2"
-          "libxslt"
-          "zlib"
-          "icu4c"
-          "oniguruma"
-          "libzip"
+          "re2c"
         ];
+
         casks = [
-          "antigravity"
-          "cloudflare-warp"
-          "dbeaver-community"
-          "docker-desktop"
+
+          # browsers
           "google-chrome"
-          "postman"
-          "the-unarchiver"
+
+          # development
           "visual-studio-code"
-          "vlc"
-          "whatsapp"
+          "docker-desktop"
+          "postman"
+          "dbeaver-community"
+
+          # networking
+          "cloudflare-warp"
           "ngrok"
-		  "openvpn-connect"
+          "openvpn-connect"
+
+          # utilities
+          "the-unarchiver"
+          "vlc"
+
+          # communication
+          "whatsapp"
+
+          # apps you already use
+          "antigravity"
         ];
       };
 
-      system.primaryUser = "Ciiruu";
+      system.primaryUser = "ciiruu";
 
       system.defaults = {
+
         dock = {
           autohide = true;
           mru-spaces = false;
           persistent-apps = [
             "/System/Applications/System Settings.app"
-            "/System/Applications/Utilities/Activity Monitor.app"
             "/Applications/Google Chrome.app"
-            "/Applications/Antigravity.app"
+            "/Applications/Visual Studio Code.app"
             "/Applications/WhatsApp.app"
           ];
         };
-        NSGlobalDomain.AppleICUForce24HourTime = true;
-        NSGlobalDomain.AppleShowAllExtensions = true;
-        NSGlobalDomain.AppleInterfaceStyle = "Dark";
-        NSGlobalDomain.KeyRepeat = 2;
-        NSGlobalDomain.InitialKeyRepeat = 15;
-        NSGlobalDomain.ApplePressAndHoldEnabled = false;
-        loginwindow.GuestEnabled = false;
-        finder.FXPreferredViewStyle = "clmv";
-        finder.AppleShowAllExtensions = true;
+
+        NSGlobalDomain = {
+          AppleInterfaceStyle = "Dark";
+          AppleICUForce24HourTime = true;
+          AppleShowAllExtensions = true;
+          KeyRepeat = 2;
+          InitialKeyRepeat = 15;
+          ApplePressAndHoldEnabled = false;
+        };
+
+        finder = {
+          FXPreferredViewStyle = "clmv";
+          AppleShowAllExtensions = true;
+        };
+
         screencapture.location = "~/Pictures/screenshots";
+
+        loginwindow.GuestEnabled = false;
       };
+
+      programs.fish.enable = true;
+
+      users.users.ciiruu = {
+        home = "/Users/ciiruu";
+        shell = pkgs.fish;
+      };
+
+      environment.shells = with pkgs; [ fish ];
 
       nix.settings.experimental-features = "nix-command flakes";
 
-      programs.fish.enable = true;
-      users.users.ciiruu = {
-          home = "/Users/ciiruu";
-          shell = pkgs.fish;
-      };
-      environment.shells = with pkgs; [
-        fish
-      ];
-
       system.configurationRevision = self.rev or self.dirtyRev or null;
       system.stateVersion = 5;
-      nixpkgs.hostPlatform = "aarch64-darwin";
+
+      nixpkgs.hostPlatform = system;
     };
-  in
-  {
+
+  in {
     darwinConfigurations."mac" = nix-darwin.lib.darwinSystem {
       modules = [
         configuration
+
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.ciiruu = import ./home.nix;
+
+          home-manager.users.ciiruu =
+            import ./home.nix;
         }
       ];
     };
