@@ -85,7 +85,7 @@
           "visual-studio-code"
           "docker-desktop"
           "postman"
-          "dbeaver-community"
+          "datagrip"
 
           # networking
           "cloudflare-warp"
