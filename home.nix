@@ -27,13 +27,11 @@
 
     globalConfig = {
       tools = {
-        node = "20"; # Disarankan kunci ke versi spesifik daripada "latest" agar stabil
+        node = "latest";
       };
       settings = {
         experimental = true;
         asdf_compat = true;
-        # Tambahkan ini agar mise otomatis mendownload tanpa bertanya
-        all_plugin_versions = true;
       };
     };
   };
