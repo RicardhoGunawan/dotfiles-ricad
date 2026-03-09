@@ -26,17 +26,17 @@
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
-      # 1. Pastikan Homebrew masuk ke PATH
+      # 1. Inisialisasi Homebrew (WAJIB PERTAMA)
       if test -d /opt/homebrew/bin
         /opt/homebrew/bin/brew shellenv | source
       end
 
-      # 2. Tambahkan PHP dari Homebrew ke PATH agar terbaca sistem
-      fish_add_path /opt/homebrew/opt/php@8.3/bin
-      fish_add_path /opt/homebrew/opt/php@8.3/sbin
+      # 2. Tambahkan PHP ke PATH secara eksplisit (Pake -p agar jadi prioritas)
+      fish_add_path -p /opt/homebrew/opt/php@8.3/bin
+      fish_add_path -p /opt/homebrew/opt/php@8.3/sbin
 
-      # 3. Aktifkan mise
+      # 3. Baru aktifkan mise
       ${pkgs.mise}/bin/mise activate fish | source
     '';
-  };
+   };
 }
