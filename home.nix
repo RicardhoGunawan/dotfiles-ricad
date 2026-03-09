@@ -26,6 +26,12 @@
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
+      # Pastikan Homebrew masuk ke PATH (untuk Apple Silicon Mac)
+      if test -d /opt/homebrew/bin
+        /opt/homebrew/bin/brew shellenv | source
+      end
+
+      # Aktifkan mise
       ${pkgs.mise}/bin/mise activate fish | source
     '';
   };
