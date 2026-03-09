@@ -75,6 +75,7 @@
           "pkg-config"
           "re2c"
           "php@8.3"
+          "composer"
         ];
 
         casks = [
