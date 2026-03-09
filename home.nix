@@ -7,7 +7,7 @@
   home.homeDirectory = lib.mkForce "/Users/ciiruu";
 
   home.packages = with pkgs; [
-    mise
+    # Nix hanya bertugas menginstal binary aplikasinya saja
     php83
     php83Packages.composer 
     pkg-config
@@ -21,24 +21,18 @@
     settings.show_program_path = true;
   };
 
+  # Konfigurasi Mise yang minimalis
   programs.mise = {
     enable = true;
     enableFishIntegration = true;
-
-    globalConfig = {
-      tools = {
-        node = "latest";
-      };
-      settings = {
-        experimental = true;
-        asdf_compat = true;
-      };
-    };
+    # globalConfig dihapus agar file ~/.config/mise/config.toml 
+    # tidak dikelola oleh Nix (menjadi writable)
   };
+
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
-      # Ini akan memasukkan binary dari mise (termasuk node) ke dalam PATH kamu secara otomatis
+      # Tetap aktifkan mise agar PATH otomatis terupdate saat buka terminal
       ${pkgs.mise}/bin/mise activate fish | source
     '';
   };
