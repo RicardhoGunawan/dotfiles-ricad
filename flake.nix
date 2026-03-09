@@ -112,9 +112,11 @@
           autohide = true;
           mru-spaces = false;
           persistent-apps = [
+            "/System/Applications/Apps.app"
             "/System/Applications/System Settings.app"
+            "/System/Applications/Utilities/Activity Monitor.app"
             "/Applications/Google Chrome.app"
-            "/Applications/Visual Studio Code.app"
+            "/Applications/Antigravity.app"
             "/Applications/WhatsApp.app"
           ];
         };
