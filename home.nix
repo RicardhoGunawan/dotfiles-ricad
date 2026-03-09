@@ -27,14 +27,13 @@
 
     globalConfig = {
       tools = {
-        node = "latest"; 
+        node = "20"; # Disarankan kunci ke versi spesifik daripada "latest" agar stabil
       };
-      # Perbaikan struktur settings
       settings = {
-        # Kita hapus autoinstall jika mise versi Anda belum mendukungnya
-        # atau gunakan asdf_compat untuk stabilitas lebih baik
-        asdf_compat = true;
         experimental = true;
+        asdf_compat = true;
+        # Tambahkan ini agar mise otomatis mendownload tanpa bertanya
+        all_plugin_versions = true;
       };
     };
   };
