@@ -37,4 +37,11 @@
       };
     };
   };
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      # Ini akan memasukkan binary dari mise (termasuk node) ke dalam PATH kamu secara otomatis
+      ${pkgs.mise}/bin/mise activate fish | source
+    '';
+  };
 }
