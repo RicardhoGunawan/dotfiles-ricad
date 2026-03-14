@@ -88,6 +88,8 @@
           "docker-desktop"
           "postman"
           "datagrip"
+	  "android-studio"
+	  "mysqlworkbench"
 
           # networking
           "cloudflare-warp"
