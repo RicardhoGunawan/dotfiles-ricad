@@ -161,7 +161,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.indra = import ./home.nix;
+          home-manager.users.ciiruu = import ./home.nix;
         }
       ];
     };
