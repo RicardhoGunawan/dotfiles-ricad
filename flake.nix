@@ -86,6 +86,7 @@
           "icu4c"
           "oniguruma"
           "libzip"
+		  "libedit"
         ];
         casks = [
           "antigravity"
