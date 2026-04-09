@@ -37,9 +37,7 @@
       # Search available package. visit https://search.nixos.org/packages
       # $ nix search nixpkgs pkg_name
       nixpkgs.config.allowUnfree = true;
-	  nixpkgs.config.permittedInsecurePackages = [
-	        "openssl-1.1.1w"
-      ];
+	 
       environment.systemPackages = with pkgs; [
         coreutils
         curl
@@ -49,7 +47,6 @@
         wget
         jq
         yq
-		openssl_1_1
       ];
 
       fonts.packages = with pkgs; [
@@ -139,23 +136,6 @@
       # Enable alternative shell support in nix-darwin.
       programs.fish.enable = true;
 
-	  programs.fish.shellInit = ''
-        # Setup Homebrew PATH
-        if test -f /opt/homebrew/bin/brew
-          eval (/opt/homebrew/bin/brew shellenv)
-        end
-
-        # Inisialisasi mise
-        if command -v mise > /dev/null
-          mise activate fish | source
-        end
-
-        # --- FIX PHP 7.3 DENGAN NIX OPENSSL ---
-        # Kita arahkan ke profile default nix yang berisi openssl_1_1
-        if test -d /run/current-system/sw/include/openssl
-            set -gx PHP_BUILD_CONFIGURE_OPTS "--with-openssl=/run/current-system/sw"
-        end
-      '';
       users.users.ciiruu = {
           home = "/Users/ciiruu";
           shell = pkgs.fish;
