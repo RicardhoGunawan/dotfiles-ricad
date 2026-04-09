@@ -96,6 +96,7 @@
           "visual-studio-code"
           "whatsapp"
           "ngrok"
+          "openvpn-connect"
         ];
       };
 
