@@ -46,6 +46,7 @@
         wget
         jq
         yq
+		openssl_1_1
       ];
 
       fonts.packages = with pkgs; [
@@ -64,8 +65,7 @@
         brews = [
           "mise"
           "mkcert"
-          "openssl@1.1"
-          # Compiling PHP
+ 		  # Compiling PHP
           "autoconf"
           "re2c"
           "bison"
@@ -137,21 +137,21 @@
       programs.fish.enable = true;
 
 	  programs.fish.shellInit = ''
-	        # Setup Homebrew PATH
-	        if test -f /opt/homebrew/bin/brew
-	          eval (/opt/homebrew/bin/brew shellenv)
-	        end
-	
-	        # Inisialisasi mise
-	        if command -v mise > /dev/null
-	          mise activate fish | source
-	        end
-	
-	        # --- TAMBAHKAN INI UNTUK PHP 7.3 ---
-	        # Memberitahu compiler untuk menggunakan OpenSSL 1.1 dari Homebrew
-	        if test -d (brew --prefix openssl@1.1 2>/dev/null)
-	            set -gx PHP_BUILD_CONFIGURE_OPTS "--with-openssl=" (brew --prefix openssl@1.1)
-	        end
+        # Setup Homebrew PATH
+        if test -f /opt/homebrew/bin/brew
+          eval (/opt/homebrew/bin/brew shellenv)
+        end
+
+        # Inisialisasi mise
+        if command -v mise > /dev/null
+          mise activate fish | source
+        end
+
+        # --- FIX PHP 7.3 DENGAN NIX OPENSSL ---
+        # Kita arahkan ke profile default nix yang berisi openssl_1_1
+        if test -d /run/current-system/sw/include/openssl
+            set -gx PHP_BUILD_CONFIGURE_OPTS "--with-openssl=/run/current-system/sw"
+        end
       '';
       users.users.ciiruu = {
           home = "/Users/ciiruu";
