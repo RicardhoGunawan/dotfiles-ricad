@@ -65,8 +65,7 @@
         brews = [
           "mise"
           "mkcert"
-		  "openssl@3"
-
+	      "openssl"
 		  # Compiling PHP
           "autoconf"
           "re2c"
