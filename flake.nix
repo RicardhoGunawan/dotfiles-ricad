@@ -134,6 +134,18 @@
 
       # Enable alternative shell support in nix-darwin.
       programs.fish.enable = true;
+
+	  programs.fish.shellInit = ''
+		        # Setup Homebrew PATH secara otomatis
+		        if test -f /opt/homebrew/bin/brew
+		          eval (/opt/homebrew/bin/brew shellenv)
+		        end
+		
+		        # Inisialisasi mise jika terinstal
+		        if command -v mise > /dev/null
+		          mise activate fish | source
+		        end
+      '';
       users.users.ciiruu = {
           home = "/Users/ciiruu";
           shell = pkgs.fish;
