@@ -91,10 +91,13 @@
           "docker-desktop"
           "google-chrome"
           "postman"
+	        "android-studio"
           "the-unarchiver"
           "visual-studio-code"
           "whatsapp"
           "ngrok"
+          "openvpn-connect"
+
         ];
       };
 
