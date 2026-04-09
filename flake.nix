@@ -64,7 +64,7 @@
         brews = [
           "mise"
           "mkcert"
-          "openssl"
+          "openssl@1.1"
           # Compiling PHP
           "autoconf"
           "re2c"
@@ -137,15 +137,21 @@
       programs.fish.enable = true;
 
 	  programs.fish.shellInit = ''
-		        # Setup Homebrew PATH secara otomatis
-		        if test -f /opt/homebrew/bin/brew
-		          eval (/opt/homebrew/bin/brew shellenv)
-		        end
-		
-		        # Inisialisasi mise jika terinstal
-		        if command -v mise > /dev/null
-		          mise activate fish | source
-		        end
+	        # Setup Homebrew PATH
+	        if test -f /opt/homebrew/bin/brew
+	          eval (/opt/homebrew/bin/brew shellenv)
+	        end
+	
+	        # Inisialisasi mise
+	        if command -v mise > /dev/null
+	          mise activate fish | source
+	        end
+	
+	        # --- TAMBAHKAN INI UNTUK PHP 7.3 ---
+	        # Memberitahu compiler untuk menggunakan OpenSSL 1.1 dari Homebrew
+	        if test -d (brew --prefix openssl@1.1 2>/dev/null)
+	            set -gx PHP_BUILD_CONFIGURE_OPTS "--with-openssl=" (brew --prefix openssl@1.1)
+	        end
       '';
       users.users.ciiruu = {
           home = "/Users/ciiruu";
