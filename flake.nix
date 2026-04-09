@@ -65,7 +65,6 @@
         brews = [
           "mise"
           "mkcert"
-	      "openssl"
 		  # Compiling PHP
           "autoconf"
           "re2c"
@@ -87,7 +86,6 @@
           "icu4c"
           "oniguruma"
           "libzip"
-		  "libedit"
         ];
         casks = [
           "antigravity"
