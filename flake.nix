@@ -96,6 +96,7 @@
           "whatsapp"
           "ngrok"
         ];
+      };
 
       system.primaryUser = "ciiruu";
 
