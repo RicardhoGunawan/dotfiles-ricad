@@ -37,6 +37,9 @@
       # Search available package. visit https://search.nixos.org/packages
       # $ nix search nixpkgs pkg_name
       nixpkgs.config.allowUnfree = true;
+	  nixpkgs.config.permittedInsecurePackages = [
+	        "openssl-1.1.1w"
+      ];
       environment.systemPackages = with pkgs; [
         coreutils
         curl
